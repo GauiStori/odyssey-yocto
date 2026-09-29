@@ -1,0 +1,10 @@
+# Yocto build artifacts
+build-*/
+tmp*/
+downloads/
+sstate-cache/
+cache/
+*.log
+
+# Temporary Buildroot/reference checkouts
+.temporary-buildroot/

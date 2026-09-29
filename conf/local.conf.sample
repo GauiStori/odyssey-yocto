@@ -1,0 +1,12 @@
+# Copy into the build directory's conf/local.conf or merge these settings
+# after envsetup.sh creates the build directory.
+
+MACHINE = "stm32mp135d-odyssey"
+DISTRO = "openstlinux-weston"
+
+# Keep host resource use bounded. Adjust to the host.
+BB_NUMBER_THREADS = "12"
+PARALLEL_MAKE = "-j 12"
+
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+
