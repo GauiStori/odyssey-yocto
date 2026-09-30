@@ -7,11 +7,21 @@ TFA_PLATFORM = "stm32mp1"
 TFA_ARM_MAJOR = "7"
 TFA_ARM_ARCH = "aarch32"
 
+# Verbose TF-A diagnostics for board bring-up.
+ST_TF_A_DEBUG = "1"
+ST_TF_A_DEBUG_TRACE = "1"
+ST_TF_A_LOG_LEVEL_DEBUG = "50"
+
 # This is the same TF-A repository and revision selected by the Buildroot
 # defconfig.  The board DT is part of this source tree.
 # Buildroot selects the tagged revision, not a branch.  nobranch=1 is
 # required because the tag is not named v2.8-stm32mp-odyssey.
-SRC_URI = "git://git.xogium.me/git/xogium/st-arm-trusted-firmware.git;protocol=https;nobranch=1"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI = " \
+    git://git.xogium.me/git/xogium/st-arm-trusted-firmware.git;protocol=https;nobranch=1 \
+    file://0001-stm32mp13-use-odyssey-debug-uart-pin.patch \
+"
 SRCREV = "v2.8-stm32mp-odyssey-r1"
 
 TF_A_VERSION = "2.8"

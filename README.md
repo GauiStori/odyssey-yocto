@@ -1,7 +1,5 @@
 # STM32MP135D Odyssey Yocto metadata
 
-**NOTICE** This build is not tested yet
-
 This directory is the Git-controlled board-specific part of the Yocto
 project. It is independent of Buildroot. The Buildroot kernel configuration
 was copied into `meta-odyssey135d/recipes-kernel/linux/files/linux.config`.
@@ -38,3 +36,6 @@ bitbake core-image-minimal
 
 See `sources.lock` for the source revisions selected by the recipes.
 
+## Status
+
+2026-09-30 SD-Card image boots without problems

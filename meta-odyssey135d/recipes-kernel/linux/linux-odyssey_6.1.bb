@@ -10,6 +10,7 @@ LINUX_RELEASE = "r4"
 PV = "${LINUX_VERSION}-${LINUX_TARGET}-${LINUX_RELEASE}"
 
 inherit kernel
+inherit kernel-devicetree
 
 DEPENDS += "rsync-native"
 
@@ -30,6 +31,7 @@ KERNEL_CONFIG_COMMAND = "oe_runmake -C ${S} O=${B} olddefconfig"
 
 KERNEL_DEVICETREE = "stm32mp135d-odyssey.dtb"
 KERNEL_IMAGETYPE = "zImage"
+KERNEL_IMAGETYPE_SYMLINK = "1"
 # The ST machine include may append zImage to this list.  Keep one entry so
 # kernel.bbclass creates kernel-image-zimage only once.
 KERNEL_IMAGETYPES = "zImage"

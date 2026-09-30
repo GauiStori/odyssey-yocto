@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Odyssey Yocto <yocto@localhost>
+Date: Wed, 30 Sep 2026 00:00:00 +0000
+Subject: [PATCH] stm32mp13: use Odyssey UART4 debug TX pin
+
+The generic STM32MP13 definition is wired for the STM32MP135-DISCO
+(PD6).  The Odyssey board routes UART4 TX to PA13, alternate function 8.
+Use the Odyssey pin for the early TF-A/crash console.
+
+Upstream-Status: Inappropriate [board-specific]
+---
+ plat/st/stm32mp1/stm32mp1_def.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/plat/st/stm32mp1/stm32mp1_def.h b/plat/st/stm32mp1/stm32mp1_def.h
+--- a/plat/st/stm32mp1/stm32mp1_def.h
++++ b/plat/st/stm32mp1/stm32mp1_def.h
+@@ -279,11 +279,11 @@
+ #define STM32MP_DEBUG_USART_BASE	UART4_BASE
+ #if STM32MP13
+-/* UART4 on HSI@64MHz, TX on GPIOF12 Alternate 8 (Disco board) */
++/* UART4 on HSI@64MHz, TX on GPIOA13 Alternate 8 (Odyssey board) */
+ #define STM32MP_DEBUG_USART_CLK_FRQ	64000000
+-#define DEBUG_UART_TX_GPIO_BANK_ADDRESS	GPIOD_BASE
++#define DEBUG_UART_TX_GPIO_BANK_ADDRESS	GPIOA_BASE
+ #define DEBUG_UART_TX_GPIO_BANK_CLK_REG	RCC_MP_S_AHB4ENSETR
+-#define DEBUG_UART_TX_GPIO_BANK_CLK_EN	RCC_MP_S_AHB4ENSETR_GPIODEN
+-#define DEBUG_UART_TX_GPIO_PORT		6
++#define DEBUG_UART_TX_GPIO_BANK_CLK_EN	RCC_MP_S_AHB4ENSETR_GPIOAEN
++#define DEBUG_UART_TX_GPIO_PORT		13
+ #define DEBUG_UART_TX_GPIO_ALTERNATE	8
+ #define DEBUG_UART_TX_CLKSRC_REG	RCC_UART4CKSELR
+ #define DEBUG_UART_TX_CLKSRC		RCC_UART4CKSELR_HSI
+-- 
+2.39.2

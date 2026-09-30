@@ -1,0 +1,10 @@
+# STM32MP135D Odyssey SD-card layout, matching the Buildroot image:
+# p1 fsbl1, p2 fsbl2, p3 fip, p4 U-Boot environment, p5 rootfs.
+
+part fsbl1 --source rawcopy --sourceparams="file=${DEPLOY_DIR_IMAGE}/arm-trusted-firmware/tf-a-stm32mp135d-odyssey-optee-sdcard.stm32" --ondisk mmcblk --part-name fsbl1 --fixed-size 1M --align 1024
+part fsbl2 --source rawcopy --sourceparams="file=${DEPLOY_DIR_IMAGE}/arm-trusted-firmware/tf-a-stm32mp135d-odyssey-optee-sdcard.stm32" --ondisk mmcblk --part-name fsbl2 --fixed-size 1M
+part fip --source rawcopy --sourceparams="file=${DEPLOY_DIR_IMAGE}/fip/fip-stm32mp135d-odyssey-optee-sdcard.bin" --ondisk mmcblk --part-name fip --part-type 19d5df83-11b0-457b-be2c-7559c13142a5 --fixed-size 4M
+part u-boot-env --source empty --ondisk mmcblk --part-name u-boot-env --fixed-size 2M
+part / --source rootfs --ondisk mmcblk --fstype=ext4 --part-name rootfs --active --extra-space 0
+
+bootloader --ptable gpt
