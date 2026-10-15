@@ -1,6 +1,5 @@
-# Use the known-working Odyssey OP-TEE fork and commit from the Buildroot
-# defconfig instead of ST's default OP-TEE repository.
-SRC_URI = "git://github.com/GauiStori/optee_os.git;protocol=https;branch=3.19.0-stm32mp-odyssey-xogium"
+# Match the active Buildroot defconfig exactly.
+SRC_URI = "git://github.com/GauiStori/optee_os.git;protocol=https;nobranch=1"
 SRCREV = "b01fad7b7aba97065a2a87794fec9b6d610059a3"
 
 S = "${WORKDIR}/git"

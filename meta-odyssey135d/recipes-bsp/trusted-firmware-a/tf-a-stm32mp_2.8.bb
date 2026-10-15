@@ -1,27 +1,16 @@
 require recipes-bsp/trusted-firmware-a/tf-a-stm32mp-common.inc
 require recipes-bsp/trusted-firmware-a/tf-a-stm32mp.inc
 
-SUMMARY = "Trusted Firmware-A for STM32MP135D Odyssey"
+SUMMARY = "Trusted Firmware-A for the STM32MP135D Odyssey"
 
+# Match the Buildroot TF-A configuration.
 TFA_PLATFORM = "stm32mp1"
 TFA_ARM_MAJOR = "7"
 TFA_ARM_ARCH = "aarch32"
 
-# Verbose TF-A diagnostics for board bring-up.
-ST_TF_A_DEBUG = "1"
-ST_TF_A_DEBUG_TRACE = "1"
-ST_TF_A_LOG_LEVEL_DEBUG = "50"
-
-# This is the same TF-A repository and revision selected by the Buildroot
-# defconfig.  The board DT is part of this source tree.
-# Buildroot selects the tagged revision, not a branch.  nobranch=1 is
-# required because the tag is not named v2.8-stm32mp-odyssey.
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
-SRC_URI = " \
-    git://git.xogium.me/git/xogium/st-arm-trusted-firmware.git;protocol=https;nobranch=1 \
-    file://0001-stm32mp13-use-odyssey-debug-uart-pin.patch \
-"
+# Match the current Buildroot defconfig exactly.  The pinned source contains
+# the board-specific TF-A support; no extra patch is applied here.
+SRC_URI = "git://git.xogium.me/git/xogium/st-arm-trusted-firmware.git;protocol=https;nobranch=1"
 SRCREV = "v2.8-stm32mp-odyssey-r1"
 
 TF_A_VERSION = "2.8"
@@ -41,4 +30,4 @@ TF_A_CONFIG_OPTS_optee:stm32mp1common = " \
     STM32MP_USB_PROGRAMMER=1 \
 "
 
-DEFAULT_PREFERENCE = "-1"
+DEFAULT_PREFERENCE = "1"

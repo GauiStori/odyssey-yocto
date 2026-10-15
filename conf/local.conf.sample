@@ -1,12 +1,75 @@
-# Copy into the build directory's conf/local.conf or merge these settings
-# after envsetup.sh creates the build directory.
+# STM32MP135D Odyssey Yocto configuration
+#
+# This file is a complete board-specific template.  Copy it to the build
+# directory after envsetup.sh creates the build directory, or merge it with
+# the generated conf/local.conf.
+#
+# The build must be run inside the Debian Bookworm chroot.
+
+# -----------------------------------------------------------------------------
+# Target selection
+# -----------------------------------------------------------------------------
 
 MACHINE = "stm32mp135d-odyssey"
 DISTRO = "openstlinux-weston"
 
-# Keep host resource use bounded. Adjust to the host.
+# -----------------------------------------------------------------------------
+# Persistent downloads and build caches
+# -----------------------------------------------------------------------------
+
+# Keep downloaded archives and Git mirrors outside the build directory.  This
+# directory can safely be reused after deleting tmp-glibc or build-*.
+DL_DIR = "${TOPDIR}/../downloads"
+
+# Keep shared-state artifacts outside the build directory as well.  Delete
+# tmp-glibc to reconstruct a build while retaining this cache.
+SSTATE_DIR = "${TOPDIR}/../sstate-cache"
+
+# -----------------------------------------------------------------------------
+# Host resource limits
+# -----------------------------------------------------------------------------
+
+# Adjust these values to the available CPU cores and memory.  Twelve workers
+# are a conservative starting point for the Bookworm chroot.
 BB_NUMBER_THREADS = "12"
 PARALLEL_MAKE = "-j 12"
 
+# -----------------------------------------------------------------------------
+# Image behavior
+# -----------------------------------------------------------------------------
+
+# Permit root login during board bring-up.  Remove this for a production image.
 EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
 
+# -----------------------------------------------------------------------------
+# Patch handling and disk monitoring
+# -----------------------------------------------------------------------------
+
+# Fail instead of opening an interactive patch-resolution shell.
+PATCHRESOLVE = "noop"
+
+# Stop before the filesystem becomes full.  Keep these limits below the free
+# space required by the build host.
+BB_DISKMON_DIRS ??= "\\
+    STOPTASKS,${TMPDIR},1G,100K \\
+    STOPTASKS,${DL_DIR},1G,100K \\
+    STOPTASKS,${SSTATE_DIR},1G,100K \\
+    STOPTASKS,/tmp,100M,100K \\
+    HALT,${TMPDIR},100M,1K \\
+    HALT,${DL_DIR},100M,1K \\
+    HALT,${SSTATE_DIR},100M,1K \\
+    HALT,/tmp,10M,1K"
+
+# -----------------------------------------------------------------------------
+# Optional performance features
+# -----------------------------------------------------------------------------
+
+# Uncomment when using a shared hash-equivalence server.
+#BB_HASHSERVE = "auto"
+#BB_SIGNATURE_HANDLER = "OEEquivHash"
+
+# Keep the BitBake server resident for faster successive commands.
+#BB_SERVER_TIMEOUT = "60"
+
+# Configuration file format version.
+CONF_VERSION = "2"

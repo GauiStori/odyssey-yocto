@@ -1,41 +1,47 @@
 # STM32MP135D Odyssey Yocto metadata
 
-This directory is the Git-controlled board-specific part of the Yocto
-project. It is independent of Buildroot. The Buildroot kernel configuration
-was copied into `meta-odyssey135d/recipes-kernel/linux/files/linux.config`.
+Prerequisites (Debian bookworm)
+The Bookworm version can be installed in chroot if not
+the main system.
+Add 'contrib' to sources
 
-Keep this directory in Git. Do not commit Yocto build output, downloads,
-sstate, or temporary source checkouts.
-
-The upstream OpenEmbedded/ST layers are expected beside this directory under
-the Yocto workspace, for example:
-
-```text
-workspace/
-  layers/openembedded-core
-  layers/meta-openembedded
-  layers/meta-st
-  odyssey-yocto-git/
+```
+apt install repo
 ```
 
-Initialize or re-enter the environment from the workspace root:
+Step by step instructions to build and flash.
+This is done in a Debian bookworm (chroot if not main system).
+
+```
+export YOCTO_ODYSSEY=<my yocto dir>
+mkdir -p ${YOCTO_ODYSSEY}
+cd ${YOCTO_ODYSSEY}
+repo init \
+    -u https://github.com/STMicroelectronics/oe-manifest.git \
+    -b refs/tags/openstlinux-6.6-yocto-scarthgap-mpu-v26.02.18
+
+repo sync
+
+git clone git@github.com:GauiStori/odyssey-yocto.git
+```
+
+Initialize and reenter the workspace root:
 
 ```bash
-DISTRO=openstlinux-weston \
-META_LAYER_ROOT=odyssey-yocto-git \
-BUILD_DIR=build-openstlinuxweston-stm32mp135d-odyssey \
-MACHINE=stm32mp135d-odyssey \
-source layers/meta-st/scripts/envsetup.sh
+cd ${YOCTO_ODYSSEY}
+source odyssey-yocto/setup-env.sh
 ```
 
 Then build the minimal image:
+```
+cd ${YOCTO_ODYSSEY}
+source odyssey-yocto/setup-env.sh
+```
 
-```bash
+```
 bitbake core-image-minimal
 ```
 
-See `sources.lock` for the source revisions selected by the recipes.
-
 ## Status
 
-2026-09-30 SD-Card image boots without problems
+2026-10-15 System build and the step by step instructions above are verified. The instructions work for sdcard. EMMC is untested yet.

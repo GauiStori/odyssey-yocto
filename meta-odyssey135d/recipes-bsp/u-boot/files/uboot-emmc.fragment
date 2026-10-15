@@ -1,5 +1,4 @@
 CONFIG_DEFAULT_DEVICE_TREE="stm32mp135d-odyssey"
-CONFIG_OF_LIST="stm32mp135d-odyssey"
 CONFIG_BOOTDELAY=3
 CONFIG_BOOTCOMMAND="ext4load mmc 0:5 ${kernel_addr_r} /boot/zImage && ext4load mmc 0:5 ${fdt_addr_r} /boot/stm32mp135d-odyssey.dtb && setenv bootargs \"root=/dev/mmcblk0p5 rootwait rw console=ttySTM0,115200n8 earlycon\" && bootz ${kernel_addr_r} - ${fdt_addr_r}"
 # CONFIG_SILENT_CONSOLE is not set
