@@ -14,9 +14,9 @@ inherit kernel-devicetree
 
 DEPENDS += "rsync-native"
 
-# Set these after inheriting kernel.bbclass; it supplies a shared staging
-# default for S which is not appropriate for this fetched source tree.
-S = "${WORKDIR}/git"
+# BitBake 2.18 unpacks this Git source below ${UNPACKDIR}/${BP}; kernel.bbclass
+# then stages it into the shared kernel-source directory.
+S = "${UNPACKDIR}/${BP}"
 B = "${WORKDIR}/build"
 
 SRC_URI = " \
@@ -48,7 +48,7 @@ do_install:append() {
 }
 
 do_configure:prepend() {
-    install -m 0644 ${WORKDIR}/linux.config ${B}/.config
+    install -m 0644 ${UNPACKDIR}/linux.config ${B}/.config
 }
 
 DEFAULT_PREFERENCE = "-1"

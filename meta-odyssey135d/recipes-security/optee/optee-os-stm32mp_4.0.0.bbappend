@@ -2,8 +2,6 @@
 SRC_URI = "git://github.com/GauiStori/optee_os.git;protocol=https;nobranch=1"
 SRCREV = "b01fad7b7aba97065a2a87794fec9b6d610059a3"
 
-S = "${WORKDIR}/git"
-
 OPTEEMACHINE = "stm32mp1"
 OPTEEOUTPUTMACHINE = "stm32mp1"
 

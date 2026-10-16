@@ -1,5 +1,5 @@
-require recipes-bsp/trusted-firmware-a/tf-a-stm32mp-common.inc
-require recipes-bsp/trusted-firmware-a/tf-a-stm32mp.inc
+require tf-a-stm32mp-common.inc
+require tf-a-stm32mp.inc
 
 SUMMARY = "Trusted Firmware-A for the STM32MP135D Odyssey"
 
@@ -18,8 +18,6 @@ TF_A_SUBVERSION = ""
 TF_A_TARGET = "stm32mp"
 TF_A_RELEASE = "odyssey-r1"
 PV = "${TF_A_VERSION}-${TF_A_TARGET}-${TF_A_RELEASE}"
-
-S = "${WORKDIR}/git"
 
 # Match BR2_TARGET_ARM_TRUSTED_FIRMWARE_ADDITIONAL_VARIABLES.  The SD-card
 # configuration adds STM32MP_SDMMC=1 through tf-a-stm32mp-config.inc.

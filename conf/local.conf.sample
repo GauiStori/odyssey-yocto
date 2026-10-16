@@ -39,7 +39,7 @@ PARALLEL_MAKE = "-j 12"
 # -----------------------------------------------------------------------------
 
 # Permit root login during board bring-up.  Remove this for a production image.
-EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+EXTRA_IMAGE_FEATURES:append = " allow-empty-password empty-root-password allow-root-login serial-autologin-root"
 
 # -----------------------------------------------------------------------------
 # Patch handling and disk monitoring

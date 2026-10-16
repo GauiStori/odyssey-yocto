@@ -12,5 +12,5 @@ UBOOT_MAKE_OPT[default_stm32mp13] = "DEVICE_TREE=stm32mp135d-odyssey"
 
 # BR2_TARGET_UBOOT_CONFIG_FRAGMENT_FILES
 do_generate_defconfig:append() {
-    cat ${WORKDIR}/uboot-emmc.fragment >> ${S}/configs/stm32mp13_defconfig
+    cat ${UNPACKDIR}/uboot-emmc.fragment >> ${S}/configs/stm32mp13_defconfig
 }
